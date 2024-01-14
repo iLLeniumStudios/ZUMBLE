@@ -1,7 +1,7 @@
 name: Publish binaries to release
 on:
   release:
-    types: [created]
+    types: [published]
 jobs:
   release:
     name: release ${{ matrix.target }}
