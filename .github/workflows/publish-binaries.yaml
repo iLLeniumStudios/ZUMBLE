@@ -1,16 +1,8 @@
-name: Create release and publish binaries
+name: Publish binaries
 on: 
-  push:
-    tags:
-    - 'v*'
+  release:
+    types: [published]
 jobs:
-  create_release:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-    - uses: actions/checkout@v4
-    - uses: ncipollo/release-action@v1
   publish_binaries:
     needs: create_release
     name: release ${{ matrix.target }}
