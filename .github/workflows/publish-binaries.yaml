@@ -4,7 +4,6 @@ on:
     types: [published]
 jobs:
   publish_binaries:
-    needs: create_release
     name: release ${{ matrix.target }}
     runs-on: ubuntu-latest
     strategy:
