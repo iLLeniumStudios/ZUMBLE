@@ -71,8 +71,9 @@ impl Client {
         publisher: Sender<ClientMessage>,
     ) -> Self {
         let tokens = authenticate.get_tokens().iter().map(|token| token.to_string()).collect();
-        let mut targets = Vec::with_capacity(30);
-        targets.resize_with(30, Default::default);
+        let capacity = 256;
+        let mut targets = Vec::with_capacity(capacity);
+        targets.resize_with(capacity, Default::default);
 
         Self {
             version,
@@ -182,13 +183,15 @@ impl Client {
         let mut server_sync = ServerSync::default();
         server_sync.set_max_bandwidth(144000);
         server_sync.set_session(self.session_id);
-        server_sync.set_welcome_text("SoZ Mumble Server".to_string());
+        server_sync.set_welcome_text("ZUMBLE Server".to_string());
 
         self.send_message(MessageKind::ServerSync, &server_sync).await
     }
 
     pub async fn send_server_config(&self) -> Result<(), MumbleError> {
         let mut server_config = ServerConfig::default();
+        server_config.set_max_bandwidth(144000);
+        server_config.set_max_users(2048);
         server_config.set_allow_html(true);
         server_config.set_message_length(512);
         server_config.set_image_message_length(0);

@@ -45,9 +45,9 @@ async fn handle_packet(mut buffer: BytesMut, size: usize, addr: SocketAddr, prot
         let mut send = Cursor::new(vec![0u8; 24]);
         send.write_u32::<byteorder::BigEndian>(protocol_version)?;
         send.write_u64::<byteorder::LittleEndian>(timestamp)?;
-        send.write_u32::<byteorder::BigEndian>(0)?;
-        send.write_u32::<byteorder::BigEndian>(250)?;
-        send.write_u32::<byteorder::BigEndian>(72000)?;
+        send.write_u32::<byteorder::BigEndian>(state.read_err().await?.clients.len() as u32)?;
+        send.write_u32::<byteorder::BigEndian>(2048)?;
+        send.write_u32::<byteorder::BigEndian>(144000)?;
 
         socket.send_to(send.get_ref().as_slice(), addr).await?;
 

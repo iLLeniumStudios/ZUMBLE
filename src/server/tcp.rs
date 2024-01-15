@@ -60,7 +60,7 @@ async fn handle_new_client(acceptor: TlsAcceptor,
     let (version, authenticate, crypt_state) = Client::init(&mut stream, server_version).await.context("init client")?;
 
     let (read, write) = io::split(stream);
-    let (tx, rx) = mpsc::channel(128);
+    let (tx, rx) = mpsc::channel(1024 * 4);
 
     let username = authenticate.get_username().to_string();
     let client = {
