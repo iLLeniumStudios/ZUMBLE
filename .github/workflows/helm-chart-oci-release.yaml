@@ -1,0 +1,31 @@
+
+name: Helm Chart OCI Release
+on:
+  push:
+    tags:
+    - "chart-v*"
+jobs:
+  helm_chart_oci_release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Read Yaml
+      id: yaml
+      run: |
+        ver=$(yq e '.version' charts/zumble/Chart.yaml)
+        echo "::notice title=Chart Version::Chart Version is $ver"
+        echo "VERSION=$ver" >> $GITHUB_OUTPUT
+    - name: Chart | Push
+      uses: appany/helm-oci-chart-releaser@v0.4.1
+      with:
+        name: zumble
+        repository: ${{ github.repository_owner }}/helm-charts
+        tag: ${{ steps.yaml.outputs.VERSION }}
+        path: charts/zumble
+        registry: ghcr.io
+        registry_username: ${{ secrets.REGISTRY_USERNAME }}
+        registry_password: ${{ secrets.REGISTRY_PASSWORD }}
+        update_dependencies: 'true' # Defaults to false

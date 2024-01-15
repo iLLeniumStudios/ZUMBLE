@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "zumble.fullname" . }}-http
+  labels:
+    {{- include "zumble.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.http.type }}
+  ports:
+  - port: {{ .Values.service.http.port }}
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    {{- include "zumble.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "zumble.fullname" . }}-mumble
+  labels:
+    {{- include "zumble.labels" . | nindent 4 }}
+spec:
+  externalTrafficPolicy: Local
+  type: {{ .Values.service.mumble.type }}
+  ports:
+  - port: {{ .Values.service.mumble.port }}
+    {{- with .Values.service.mumble.nodePort }}
+    nodePort: {{ . }}
+    {{- end }}
+    targetPort: mumble-udp
+    protocol: UDP
+    name: mumble-udp
+  - port: {{ .Values.service.mumble.port }}
+    {{- with .Values.service.mumble.nodePort }}
+    nodePort: {{ . }}
+    {{- end }}
+    targetPort: mumble-tcp
+    protocol: TCP
+    name: mumble-tcp
+  selector:
+    {{- include "zumble.selectorLabels" . | nindent 4 }}
+---
