@@ -12,6 +12,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: ncipollo/release-action@v1
   publish_binaries:
+    needs: create_release
     name: release ${{ matrix.target }}
     runs-on: ubuntu-latest
     strategy:
