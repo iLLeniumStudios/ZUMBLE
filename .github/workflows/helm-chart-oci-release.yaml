@@ -3,7 +3,7 @@ name: Helm Chart OCI Release
 on:
   push:
     tags:
-    - "chart-v*"
+    - "zumble-*"
 jobs:
   helm_chart_oci_release:
     runs-on: ubuntu-latest
@@ -22,7 +22,7 @@ jobs:
       uses: appany/helm-oci-chart-releaser@v0.4.1
       with:
         name: zumble
-        repository: ${{ github.repository }}/helm-charts
+        repository: ${{ github.repository_owner }}/helm-charts
         tag: ${{ steps.yaml.outputs.VERSION }}
         path: charts/zumble
         registry: ghcr.io
