@@ -71,7 +71,7 @@ impl Client {
         publisher: Sender<ClientMessage>,
     ) -> Self {
         let tokens = authenticate.get_tokens().iter().map(|token| token.to_string()).collect();
-        let capacity = 256;
+        let capacity = 4096;
         let mut targets = Vec::with_capacity(capacity);
         targets.resize_with(capacity, Default::default);
 
