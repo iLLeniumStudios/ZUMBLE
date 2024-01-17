@@ -176,7 +176,11 @@ impl ServerState {
                 }) {
                     Ok(_) => {}
                     Err(err) => {
-                        tracing::error!("failed to send message to {}: {}", client_read.authenticate.get_username(), err);
+                        if err.to_string() == "channel closed" {
+                            tracing::debug!("failed to send message to {}: {}", client_read.authenticate.get_username(), err);
+                        } else {
+                            tracing::error!("failed to send message to {}: {}", client_read.authenticate.get_username(), err);
+                        }
                     }
                 }
             }

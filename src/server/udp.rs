@@ -248,7 +248,11 @@ async fn handle_packet(mut buffer: BytesMut, size: usize, addr: SocketAddr, prot
             match send_client_packet {
                 Ok(_) => (),
                 Err(err) => {
-                    tracing::error!("cannot send voice packet to client: {}", err);
+                    if err.to_string() == "channel closed" {
+                        tracing::debug!("cannot send voice packet to client: {}", err);
+                    } else {
+                        tracing::error!("cannot send voice packet to client: {}", err);
+                    }
                 }
             }
         }

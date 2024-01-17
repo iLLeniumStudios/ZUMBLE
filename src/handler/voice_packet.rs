@@ -85,11 +85,19 @@ impl Handler for VoicePacket<Clientbound> {
                         match client_read.publisher.try_send(ClientMessage::SendVoicePacket(self.clone())) {
                             Ok(_) => {}
                             Err(err) => {
-                                tracing::error!(
-                                    "error sending voice packet message to {}: {}",
-                                    client_read.authenticate.get_username(),
-                                    err
-                                );
+                                if err.to_string() == "channel closed" {
+                                    tracing::debug!(
+                                        "error sending voice packet message to {}: {}",
+                                        client_read.authenticate.get_username(),
+                                        err
+                                    );
+                                } else {
+                                    tracing::error!(
+                                        "error sending voice packet message to {}: {}",
+                                        client_read.authenticate.get_username(),
+                                        err
+                                    );
+                                }
                             }
                         }
                     }
