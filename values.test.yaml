@@ -1,6 +1,0 @@
-nodeSelector:
-  node-role.kubernetes.io/mumble: ""
-tolerations:
-- key: mumble
-  value: "true"
-  effect: NoSchedule
