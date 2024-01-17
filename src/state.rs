@@ -121,7 +121,7 @@ impl ServerState {
             Some(state.get_parent()),
             state.get_name().to_string(),
             state.get_description().to_string(),
-            state.get_temporary(),
+            false,
         )));
 
         self.channels.insert(channel_id, channel.clone());

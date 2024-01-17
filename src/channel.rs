@@ -39,7 +39,7 @@ impl Channel {
             state.set_parent(parent_id);
         }
 
-        state.set_temporary(self.temporary);
+        state.set_temporary(false);
         state.set_position(self.id as i32);
 
         state

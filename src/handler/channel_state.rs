@@ -29,12 +29,6 @@ impl Handler for ChannelState {
             return Ok(());
         }
 
-        if !self.get_temporary() {
-            tracing::warn!("cannot create channel: channel must be temporary");
-
-            return Ok(());
-        }
-
         let name = self.get_name();
 
         if !{ state.read_err().await?.channels.contains_key(&self.get_parent()) } {
