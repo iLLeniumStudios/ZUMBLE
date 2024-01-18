@@ -151,7 +151,7 @@ async fn handle_packet(mut buffer: BytesMut, size: usize, addr: SocketAddr, prot
                 (Some(client), Some(packet)) => {
                     {
                         tracing::info!(
-                            "UPD connected client {} on {}",
+                            "UDP connected client {} on {}",
                             client.read_err().await?.authenticate.get_username(),
                             addr
                         );
