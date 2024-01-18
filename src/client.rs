@@ -18,6 +18,7 @@ use tokio::net::{TcpStream, UdpSocket};
 use tokio::sync::mpsc::Sender;
 use tokio::time::timeout;
 use tokio_rustls::server::TlsStream;
+use konst::{primitive::parse_usize, result::unwrap_ctx};
 
 pub struct Client {
     pub version: Version,
@@ -71,7 +72,7 @@ impl Client {
         publisher: Sender<ClientMessage>,
     ) -> Self {
         let tokens = authenticate.get_tokens().iter().map(|token| token.to_string()).collect();
-        let capacity = 4096;
+        let capacity = unwrap_ctx!(parse_usize(&std::env::var("CLIENT_CAPACITY").unwrap_or("2048".to_string())));
         let mut targets = Vec::with_capacity(capacity);
         targets.resize_with(capacity, Default::default);
 

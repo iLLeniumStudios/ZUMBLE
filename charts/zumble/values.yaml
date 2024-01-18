@@ -66,3 +66,6 @@ logLevel: info
 api:
   username: admin
   password: changeme
+
+config:
+  clientCapacity: 2048

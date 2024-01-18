@@ -176,7 +176,7 @@ impl ServerState {
                 }) {
                     Ok(_) => {}
                     Err(err) => {
-                        if err.to_string() == "channel closed" {
+                        if err.to_string() == "channel closed" || err.to_string() == "no available capacity" {
                             tracing::debug!("failed to send message to {}: {}", client_read.authenticate.get_username(), err);
                         } else {
                             tracing::error!("failed to send message to {}: {}", client_read.authenticate.get_username(), err);
