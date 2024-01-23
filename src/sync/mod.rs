@@ -4,7 +4,7 @@ use std::time::Duration;
 use thiserror::Error;
 
 pub use rwlock::RwLock;
-pub const DEFAULT_TIMEOUT_DURATION: Duration = Duration::from_millis(100);
+pub const DEFAULT_TIMEOUT_DURATION: Duration = Duration::from_millis(250);
 pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Error, Debug)]
