@@ -130,14 +130,14 @@ impl CryptState {
             if diff > 0 {
                 lost = i32::from(diff - 1); // lost a few packets in between this and the last one
             } else if diff > -30 {
-                if self.decrypt_history[nonce_0 as usize] == (self.decrypt_nonce >> 8) as u8 {
-                    self.decrypt_nonce = saved_nonce;
+                //if self.decrypt_history[nonce_0 as usize] == (self.decrypt_nonce >> 8) as u8 {
+                //    self.decrypt_nonce = saved_nonce;
 
-                    return Err(DecryptError::Repeat);
-                }
+                //    return Err(DecryptError::Repeat);
+                //}
                 // just late
-                late = true;
-                lost = -1;
+                //late = true;
+                //lost = -1;
             } else {
                 self.decrypt_nonce = saved_nonce;
                 return Err(DecryptError::Late); // late by more than 30 packets
