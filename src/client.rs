@@ -182,7 +182,7 @@ impl Client {
 
     pub async fn send_server_sync(&self) -> Result<(), MumbleError> {
         let mut server_sync = ServerSync::default();
-        server_sync.set_max_bandwidth(144000);
+        server_sync.set_max_bandwidth(72000);
         server_sync.set_session(self.session_id);
         server_sync.set_welcome_text("ZUMBLE Server".to_string());
 
@@ -191,7 +191,7 @@ impl Client {
 
     pub async fn send_server_config(&self) -> Result<(), MumbleError> {
         let mut server_config = ServerConfig::default();
-        server_config.set_max_bandwidth(144000);
+        server_config.set_max_bandwidth(72000);
         server_config.set_max_users(2048);
         server_config.set_allow_html(true);
         server_config.set_message_length(512);
