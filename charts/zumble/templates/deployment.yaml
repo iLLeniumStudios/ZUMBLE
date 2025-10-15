@@ -42,6 +42,10 @@ spec:
         envFrom:
         - secretRef:
             name: {{ include "zumble.fullname" . }}
+        {{- with .Values.command }}
+        command:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         args:
         - --http-password
         - "$(HTTP_API_PASSWORD)"
